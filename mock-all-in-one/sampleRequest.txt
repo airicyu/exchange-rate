@@ -1,0 +1,8 @@
+###
+GET http://localhost:9000/api/v1.0/data/exchangeRates:usd-20180626
+
+###
+GET http://localhost:9100/api/v1.0/exchangeRates/usd/latest
+
+###
+GET http://localhost:9100/api/v1.0/exchangeRates/usd/historical/2018-06-01

@@ -1,0 +1,47 @@
+{
+  "name": "exchange-rate-microservice",
+  "version": "0.0.1",
+  "private": true,
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "nyc mocha",
+    "coverage": "nyc report --reporter=text-lcov > coverage/icov.info && codecov --file=./coverage/lcov.info"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.3",
+    "http-shutdown": "^1.2.0",
+    "request": "^2.87.0",
+    "yamljs": "^0.3.0"
+  },
+  "devDependencies": {
+    "chai": "^4.1.2",
+    "nyc": "^12.0.2"
+  },
+  "nyc": {
+    "check-coverage": false,
+    "per-file": true,
+    "lines": 20,
+    "statements": 20,
+    "functions": 20,
+    "branches": 20,
+    "include": [
+      "src/**/*.js"
+    ],
+    "exclude": [
+    ],
+    "reporter": [
+      "lcov",
+      "text-summary"
+    ],
+    "require": [],
+    "extension": [],
+    "cache": true,
+    "all": true,
+    "report-dir": "./coverage"
+  }
+}
