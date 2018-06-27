@@ -18,7 +18,7 @@ describe('Test service lifecycle', function () {
                     port: 9001
                 };
 
-                let configService = require('./../src/services/configServiceProvider').service;
+                let configService = require('./../src/services/configServiceProvider').getService();
                 configService.config = config;
 
                 await library.api.start();

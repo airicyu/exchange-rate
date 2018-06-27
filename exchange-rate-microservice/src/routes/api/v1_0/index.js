@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router();
 const exchangeRatesRoutes = require('./exchangeRatesRoutes.js');
 
-const logService = require('./../../../services/logServiceProvider').service;
+const logService = require('./../../../services/logServiceProvider').getService();
 
 /**
  * Route exchange rate resources

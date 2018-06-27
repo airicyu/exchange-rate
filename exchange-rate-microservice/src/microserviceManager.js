@@ -5,8 +5,8 @@ const httpShutdown = require('http-shutdown');
 const express = require('express');
 const bodyParser = require('body-parser');
 
-const configService = require('./services/configServiceProvider').service;
-const logService = require('./services/logServiceProvider').service;
+const configService = require('./services/configServiceProvider').getService();
+const logService = require('./services/logServiceProvider').getService();
 const apiRouter = require('./routes/api');
 
 

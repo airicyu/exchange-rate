@@ -3,7 +3,7 @@
 const YAML = require('yamljs');
 const library = require('./library.js');
 
-const configService = require('./services/configServiceProvider').service;
+const configService = require('./services/configServiceProvider').getService();
 
 const run = async ()=>{
 

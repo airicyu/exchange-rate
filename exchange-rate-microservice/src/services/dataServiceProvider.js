@@ -1,8 +1,6 @@
 'use strict';
 
-const DataServiceRouteAgent = require('./../interfaces/DataServiceRouteAgent');
 const DataService = require('../interfaces/DataService');
-const DefaultDataServiceRouteAgent = require('./../implementations/DefaultDataServiceRouteAgent');
 const DefaultDataService = require('./../implementations/DefaultDataService');
 const serviceProvider = require('./serviceProvider');
 
@@ -14,12 +12,18 @@ const serviceProvider = require('./serviceProvider');
  */
 class DelegateDataService extends DataService {
     
-    async queryCurrencyData(currency) {
-        return serviceProvider.getServiceInstance(DataService).queryCurrencyData(currency);
+    constructor(strategyName){
+        super();
+        let self = this;
+        self.delegateStrategyName = strategyName;
+    }
+
+    async queryCurrencyLatestData(currency) {
+        return serviceProvider.getServiceInstance(DataService, this.delegateStrategyName).queryCurrencyLatestData(currency);
     }
 
     async queryCurrencyHistoricalData(currency, date) {
-        return serviceProvider.getServiceInstance(DataService).queryCurrencyHistoricalData(currency, date);
+        return serviceProvider.getServiceInstance(DataService, this.delegateStrategyName).queryCurrencyHistoricalData(currency, date);
     }
 }
 
@@ -30,24 +34,20 @@ class DelegateDataService extends DataService {
  * @class DataServiceProvider
  * @extends {DataService}
  */
-class DataServiceProvider extends DataService {
+class DataServiceProvider {
 
     constructor() {
-        super();
-        serviceProvider.setServiceInstance(DataService, new DefaultDataService());
-        serviceProvider.setServiceInstance(DataServiceRouteAgent, new DefaultDataServiceRouteAgent());
-        this.delegateService = new DelegateDataService();
+        serviceProvider.registerServiceInstance(DataService, new DefaultDataService());
+        this.delegateServiceInstanceMap = {};
     }
 
-
-    /**
-     * getter of service
-     *
-     * @readonly
-     * @memberof DataServiceProvider
-     */
-    get service(){
-        return this.delegateService;
+    getService(strategyName){
+        if (this.delegateServiceInstanceMap[strategyName]){
+            return this.delegateServiceInstanceMap[strategyName];
+        } else {
+            this.delegateServiceInstanceMap[strategyName] = new DelegateDataService(strategyName);
+            return this.delegateServiceInstanceMap[strategyName];
+        }
     }
 }
 

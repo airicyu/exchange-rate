@@ -7,7 +7,7 @@
  */
 class DataService {
 
-    async queryCurrencyData(currency) {
+    async queryCurrencyLatestData(currency) {
     }
 
     async queryCurrencyHistoricalData(currency, date) {

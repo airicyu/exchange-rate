@@ -4,22 +4,22 @@ const express = require('express');
 const router = express.Router();
 const exchangeRatesController = require('./../../../controllers/exchangeRatesController.js');
 
-const logService = require('./../../../services/logServiceProvider').service;
+const logService = require('./../../../services/logServiceProvider').getService();
 
 /**
  * Route query currency latest rate
  */
-router.get('/:currency/latest', (req, res, next)=>{
-    logService.log(`exchangeRatesRoutes currency latest value '/:currency/latest', ${req.originalUrl}`);
+router.get('/:baseCurrency/latest', (req, res, next)=>{
+    logService.log(`exchangeRatesRoutes currency latest value '/:baseCurrency/latest', ${req.originalUrl}`);
     next();
-}, exchangeRatesController.currencyLatestData);
+}, exchangeRatesController.getCurrencyLatestData);
 
 /**
  * Route query currency historical rate
  */
-router.get('/:currency/historical/:date', (req, res, next)=>{
-    logService.log(`exchangeRatesRoutes currency historical value '/:currency/historical/:date', ${req.originalUrl}`);
+router.get('/:baseCurrency/historical/:date', (req, res, next)=>{
+    logService.log(`exchangeRatesRoutes currency historical value '/:baseCurrency/historical/:date', ${req.originalUrl}`);
     next();
-}, exchangeRatesController.currencyHistoricalData);
+}, exchangeRatesController.getCurrencyHistoricalData);
 
 module.exports = router;

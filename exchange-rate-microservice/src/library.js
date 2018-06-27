@@ -3,7 +3,6 @@
 const interfaces = {
     ConfigService: require('./interfaces/ConfigService.js'),
     DataService: require('./interfaces/DataService.js'),
-    DataServiceRouteAgent: require('./interfaces/DataServiceRouteAgent.js'),
     LogService: require('./interfaces/LogService.js'),
 }
 

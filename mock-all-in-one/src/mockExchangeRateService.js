@@ -53,4 +53,4 @@ class MockExchangeRateService {
     }
 }
 
-module.exports = MockExchangeRateService;
+module.exports = MockExchangeRate.getService();

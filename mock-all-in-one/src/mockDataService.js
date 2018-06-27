@@ -16,22 +16,30 @@ class MockDataService {
         self._map = options.dataMap;
     }
     
-    async start(){
+    async start() {
         let self = this;
         let port = self._options.port;
 
         let app = express();
-        app.get('/api/v1.0/data/:key', (req, res)=>{
+
+        app.get('/api/v1.0/exchangeRates/:currency/latest', (req, res) => {
             res.send({
                 error: null,
-                data: self._map[req.params.key]
+                data: self._map[req.params.currency].latest
+            });
+        });
+
+        app.get('/api/v1.0/exchangeRates/:currency/historical/:date', (req, res) => {
+            res.send({
+                error: null,
+                data: self._map[req.params.currency].historical
             });
         });
 
         let server = http.createServer(app);
         server.listen(port);
         self._server = httpShutdown(server);
-        console.log(`Mock Data Service started with port ${port}`);
+        console.log(`Mock Exchange Rate Data Service started with port ${port}`);
         return;
     }
 
@@ -45,4 +53,4 @@ class MockDataService {
     }
 }
 
-module.exports = MockDataService;
+module.exports = MockData.getService();

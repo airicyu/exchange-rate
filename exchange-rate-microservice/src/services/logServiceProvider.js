@@ -11,9 +11,26 @@ const serviceProvider = require('./serviceProvider');
  * @extends {LogService}
  */
 class DelegateLogService extends LogService{
+
+    constructor(strategyName){
+        super();
+        let self = this;
+        self.delegateStrategyName = strategyName;
+    }
+
     log(...args){
-        let service = serviceProvider.getServiceInstance(LogService);
+        let service = serviceProvider.getServiceInstance(LogService, this.delegateStrategyName);
         return service.log(...args);
+    }
+
+    debug(...args){
+        let service = serviceProvider.getServiceInstance(LogService, this.delegateStrategyName);
+        return service.debug(...args);
+    }
+
+    error(...args){
+        let service = serviceProvider.getServiceInstance(LogService, this.delegateStrategyName);
+        return service.error(...args);
     }
 }
 
@@ -24,22 +41,20 @@ class DelegateLogService extends LogService{
  * @class LogServiceProvider
  * @extends {LogService}
  */
-class LogServiceProvider extends LogService {
+class LogServiceProvider {
 
     constructor() {
-        super();
-        serviceProvider.setServiceInstance(LogService, new DefaultLogService());
-        this.delegateService = new DelegateLogService();
+        serviceProvider.registerServiceInstance(LogService, new DefaultLogService());
+        this.delegateServiceInstanceMap = {};
     }
 
-    /**
-     * getter of service
-     *
-     * @readonly
-     * @memberof LogServiceProvider
-     */
-    get service(){
-        return this.delegateService;
+    getService(strategyName){
+        if (this.delegateServiceInstanceMap[strategyName]){
+            return this.delegateServiceInstanceMap[strategyName];
+        } else {
+            this.delegateServiceInstanceMap[strategyName] = new DelegateLogService(strategyName);
+            return this.delegateServiceInstanceMap[strategyName];
+        }
     }
 }
 

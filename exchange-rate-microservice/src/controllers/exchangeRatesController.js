@@ -4,8 +4,8 @@
 This file is the controller for exchange rates business function
 */
 
-const dataService = require('./../services/dataServiceProvider').service;
-const logService = require('./../services/logServiceProvider').service;
+const dataService = require('./../services/dataServiceProvider').getService();
+const logService = require('./../services/logServiceProvider').getService();
 
 const exchangeRatesController = {};
 
@@ -16,10 +16,10 @@ const exchangeRatesController = {};
  * @param {*} res
  * @returns
  */
-exchangeRatesController.currencyLatestData = async (req, res) => {
+exchangeRatesController.getCurrencyLatestData = async (req, res) => {
     // input validation
-    let currency = req.params.currency;
-    if (!currency || !/^[a-z]*$/.test("" + currency)) {
+    let baseCurrency = req.params.baseCurrency;
+    if (!baseCurrency || !/^[a-z]*$/.test("" + baseCurrency)) {
         return res.json({
             error: 'Invalid request',
             data: null
@@ -27,7 +27,7 @@ exchangeRatesController.currencyLatestData = async (req, res) => {
     }
 
     // query data from data service
-    let { error, data } = await dataService.queryCurrencyData(currency);
+    let { error, data } = await dataService.queryCurrencyLatestData(baseCurrency);
 
     // response
     if (error) {
@@ -51,20 +51,19 @@ exchangeRatesController.currencyLatestData = async (req, res) => {
  * @param {*} res
  * @returns
  */
-exchangeRatesController.currencyHistoricalData = async (req, res) => {
+exchangeRatesController.getCurrencyHistoricalData = async (req, res) => {
 
-    let currency = req.params.currency;
+    let baseCurrency = req.params.baseCurrency;
     let date = req.params.date;
-    date = date.replace(/-/g, '');
 
     // input validation
-    if (!currency || !/^[a-z]*$/.test("" + currency)) {
+    if (!baseCurrency || !/^[a-z]*$/.test("" + baseCurrency)) {
         return res.json({
             error: 'Invalid request',
             data: null
         });
     }
-    if (!date || !/^[0-9]{8}$/.test("" + date)) {
+    if (!date || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test("" + date)) {
         return res.json({
             error: 'Invalid request',
             data: null
@@ -72,7 +71,7 @@ exchangeRatesController.currencyHistoricalData = async (req, res) => {
     }
 
     // query data from data service
-    let { error, data } = await dataService.queryCurrencyHistoricalData(currency, date);
+    let { error, data } = await dataService.queryCurrencyHistoricalData(baseCurrency, date);
 
     // response
     if (error) {
