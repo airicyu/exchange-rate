@@ -1,7 +1,7 @@
 'use strict';
 
 const DataService = require('./../interfaces/DataService');
-const configService = require('./../services/ConfigServiceProvider.js').getService();
+const configService = require('./../services/configServiceProvider.js').getService();
 const logService = require('./../services/logServiceProvider.js').getService();
 const keyValueStoreService = require('./../services/keyValueStoreServiceProvider.js').getService();
 const request = require('request');
@@ -35,7 +35,7 @@ class DefaultDataService extends DataService {
         let storeData = await keyValueStoreService.get(dataKey);
         let currencyDataLastSyncTime = await keyValueStoreService.get('_latestCurrencyDataLastUpdateTime');
 
-        if (!storeData || !currencyDataLastSyncTime || Date.now() - currencyDataLastSyncTime > 5 * 60 * 1000) { //5 minute refresh
+        if (!storeData || !currencyDataLastSyncTime || Date.now() - parseInt(currencyDataLastSyncTime, 10) > 5 * 60 * 1000) { //5 minute refresh
             //refresh data
             let now = Date.now();
             let result = await self.fetchLatestCurrencyDataFromSource(baseCurrency);
@@ -44,7 +44,7 @@ class DefaultDataService extends DataService {
 
             if (!error && data) {
                 keyValueStoreService.set(dataKey, JSON.stringify(data));
-                keyValueStoreService.set('_latestCurrencyDataLastUpdateTime', now);
+                keyValueStoreService.set('_latestCurrencyDataLastUpdateTime', '' + now);
             }
 
         } else {

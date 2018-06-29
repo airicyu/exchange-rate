@@ -76,7 +76,7 @@
                     }
                 })
                 .done(function (data) {
-                    console.log(`Ajax query result: ${data}`);
+                    console.log('Ajax query result:', data);
                     if (data && data[targetCurrency]){
                         $('#targetCurrency').text(targetCurrency);
                         $('#querySearchDate').text(queryDate);

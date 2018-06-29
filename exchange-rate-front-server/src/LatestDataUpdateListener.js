@@ -2,7 +2,19 @@
 
 const events = require('events');
 
-class LatestDataUpdateListener extends events.EventEmitter{
+/**
+ * Listener to latest data update
+ *
+ * @class LatestDataUpdateListener
+ * @extends {events.EventEmitter}
+ */
+class LatestDataUpdateListener extends events.EventEmitter {
+
+    /**
+     *Creates an instance of LatestDataUpdateListener.
+     * @param {*} { subscription }
+     * @memberof LatestDataUpdateListener
+     */
     constructor({ subscription }) {
         super();
         let self = this;
@@ -14,11 +26,21 @@ class LatestDataUpdateListener extends events.EventEmitter{
         };
     }
 
+    /**
+     * Start listening
+     *
+     * @memberof LatestDataUpdateListener
+     */
     listen() {
         let self = this;
         self.subscription.on(`message`, self.messageHandler);
     }
 
+    /**
+     * Stop listening
+     *
+     * @memberof LatestDataUpdateListener
+     */
     stop() {
         let self = this;
         self.subscription.removeListener('message', self.messageHandler);

@@ -3,6 +3,7 @@
 /*
 This file is the controller for exchange rates business function
 */
+const moment = require('moment');
 
 const dataService = require('./../services/dataServiceProvider').getService();
 const logService = require('./../services/logServiceProvider').getService();
@@ -68,6 +69,13 @@ exchangeRatesController.getCurrencyHistoricalData = async (req, res) => {
     if (!date || !/^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test("" + date)) {
         return res.json({
             error: 'Invalid request',
+            data: null
+        });
+    }
+
+    if (moment(date + ' 23:59:59', "YYYY-MM-DD HH:mm:ss").add(1, 'second').isAfter(new Date())) {
+        return res.json({
+            error: 'Historical date should not be today or future date',
             data: null
         });
     }

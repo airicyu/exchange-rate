@@ -1,12 +1,17 @@
 'use strict';
 
+/**
+ * Broadcast the latest data update
+ *
+ * @class BroadcastLatestDataHandler
+ */
 class BroadcastLatestDataHandler {
-    constructor({topic}) {
+    constructor({ topic }) {
         this.topic = topic;
     }
 
     /**
-     * Broadcast the latest data to all subscriptions
+     * Broadcast the latest data update to all subscriptions
      * @param {*} latestDataMessage 
      */
     broadcast(latestDataMessage) {

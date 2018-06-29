@@ -1,7 +1,7 @@
 'use strict';
 
 const KeyValueStoreService = require('./../interfaces/KeyValueStoreService');
-const configService = require('./../services/ConfigServiceProvider.js').getService();
+const configService = require('./../services/configServiceProvider.js').getService();
 const logService = require('./../services/logServiceProvider.js').getService();
 
 /**

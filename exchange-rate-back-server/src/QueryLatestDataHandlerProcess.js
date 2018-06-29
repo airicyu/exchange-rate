@@ -1,6 +1,23 @@
 'use strict';
 
+/**
+ * Query latest exchange rate data process
+ * 
+ * TODO checking subscription queue interval is minimum 1 second (hardcoded). Should make it configuable.
+ *
+ * @class QueryLatestDataHandlerProcess
+ */
 class QueryLatestDataHandlerProcess {
+
+    /**
+     *Creates an instance of QueryLatestDataHandlerProcess.
+     * @param {*} {
+     *         subscription,
+     *         broadcastDataHandler,
+     *         getLatestDataFromRemoteSourceFunc
+     *     }
+     * @memberof QueryLatestDataHandlerProcess
+     */
     constructor({
         subscription,
         broadcastDataHandler,
@@ -13,6 +30,11 @@ class QueryLatestDataHandlerProcess {
         self.getLatestDataFromRemoteSourceFunc = getLatestDataFromRemoteSourceFunc;
     }
 
+    /**
+     * run
+     *
+     * @memberof QueryLatestDataHandlerProcess
+     */
     async run() {
         let self = this;
         self.messagesBuffer = [];
@@ -25,7 +47,7 @@ class QueryLatestDataHandlerProcess {
         };
         self.subscription.on(`message`, messageHandler);
 
-        //trigger query API once with minimum 5 second interval
+        //trigger query API once with minimum 1 second interval
         while (true) {
             await sleep(1000);
             if (self.messagesBuffer.length > 0) {
@@ -36,14 +58,19 @@ class QueryLatestDataHandlerProcess {
         }
 
     }
-   
+
 }
 
+/**
+ * Helper function for sleeping
+ *
+ * @param {*} ms
+ * @returns
+ */
 const sleep = async (ms) => {
     return new Promise((resolve) => {
         setTimeout(resolve, ms);
     });
 }
-
 
 module.exports = QueryLatestDataHandlerProcess;

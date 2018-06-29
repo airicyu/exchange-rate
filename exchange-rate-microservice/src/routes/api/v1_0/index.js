@@ -17,10 +17,7 @@ router.use('/exchangeRates', (req, res, next) => {
  * For health check purpose
  */
 router.get('/healthCheck', (req, res) => {
-    res.json({
-        error: null,
-        data: true
-    });
+    res.send('OK')
 });
 
 module.exports = router;
