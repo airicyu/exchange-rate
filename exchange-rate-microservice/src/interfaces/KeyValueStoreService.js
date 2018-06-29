@@ -7,11 +7,22 @@
  */
 class KeyValueStoreService {
 
-    async get(key) {
-    }
+    /**
+     * Get value from key-value-store
+     *
+     * @param {*} key
+     * @memberof KeyValueStoreService
+     */
+    async get(key) {}
 
-    async set(key, value) {
-    }
+    /**
+     * Set value to key-value-store
+     *
+     * @param {*} key
+     * @param {*} value
+     * @memberof KeyValueStoreService
+     */
+    async set(key, value) {}
 }
 
 module.exports = KeyValueStoreService;

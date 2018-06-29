@@ -1,17 +1,28 @@
 'use strict';
 
 /**
- * Data Service Interface
+ * Exchange Rate Data Service
  *
  * @class DataService
  */
 class DataService {
 
-    async queryCurrencyLatestData(currency) {
-    }
+    /**
+     * Query currency exchange rate latest data
+     *
+     * @param {*} currency
+     * @memberof DataService
+     */
+    async queryCurrencyLatestData(currency) {}
 
-    async queryCurrencyHistoricalData(currency, date) {
-    }
+    /**
+     * Query currency exchange rate historical data
+     *
+     * @param {*} currency
+     * @param {*} date
+     * @memberof DataService
+     */
+    async queryCurrencyHistoricalData(currency, date) {}
 }
 
 module.exports = DataService;

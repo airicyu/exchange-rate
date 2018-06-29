@@ -7,6 +7,7 @@ This file is the controller for exchange rates business function
 const dataService = require('./../services/dataServiceProvider').getService();
 const logService = require('./../services/logServiceProvider').getService();
 
+//main controller
 const exchangeRatesController = {};
 
 /**
@@ -17,6 +18,7 @@ const exchangeRatesController = {};
  * @returns
  */
 exchangeRatesController.getCurrencyLatestData = async (req, res) => {
+
     // input validation
     let baseCurrency = req.params.baseCurrency;
     if (!baseCurrency || !/^[a-z]*$/.test("" + baseCurrency)) {

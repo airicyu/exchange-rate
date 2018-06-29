@@ -18,13 +18,13 @@ const apiRouter = require('./routes/api');
  */
 class ExchangeRateMicroserviceManager {
 
-    constructor(){
+    constructor() {
         let self = this;
         self._app = null;
         self._server = null;
     }
 
-    _inflatExpressApp(){
+    _inflatExpressApp() {
         let self = this;
         self._app = express();
         let app = self._app;
@@ -32,7 +32,7 @@ class ExchangeRateMicroserviceManager {
             limit: '1mb'
         }));
 
-        app.use('/', (req, res, next)=>{
+        app.use('/', (req, res, next) => {
             logService.log(`app router '*', ${req.originalUrl}`);
             next();
         }, apiRouter);
@@ -45,17 +45,17 @@ class ExchangeRateMicroserviceManager {
      * @returns
      * @memberof ExchangeRateMicroserviceManager
      */
-    async start(){
+    async start() {
         let self = this;
         self._inflatExpressApp();
-        
+
         let server = http.createServer(self._app);
         let port = configService.config.port;
         server.listen(port);
         self._server = httpShutdown(server);
-        
+
         logService.log(`Exchange Rate Service started with port ${port}`);
-        
+
         return;
     }
 
@@ -65,7 +65,7 @@ class ExchangeRateMicroserviceManager {
      * @returns
      * @memberof ExchangeRateMicroserviceManager
      */
-    async stop(){
+    async stop() {
         let self = this;
         return new Promise((resolve, reject) => {
             self._server.forceShutdown(() => {

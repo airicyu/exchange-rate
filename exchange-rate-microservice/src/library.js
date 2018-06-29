@@ -18,15 +18,15 @@ const library = {
     interfaces
 }
 
-library.api.getServiceProvider = ()=>{
+library.api.getServiceProvider = () => {
     return serviceProvider;
 }
 
-library.api.start = async()=>{
+library.api.start = async () => {
     return microserviceManager.start();
 }
 
-library.api.stop = async ()=>{
+library.api.stop = async () => {
     return microserviceManager.stop();
 }
 

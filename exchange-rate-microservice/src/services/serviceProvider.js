@@ -8,48 +8,71 @@
  */
 class ServiceProvider {
 
+    /**
+     *Creates an instance of ServiceProvider.
+     * @memberof ServiceProvider
+     */
     constructor() {
         let self = this;
         self._store = {};
         self._store.services = new Map();
     }
 
-    static get defaultStrategyName(){
+    /**
+     * Get default strategy name
+     *
+     * @readonly
+     * @static
+     * @memberof ServiceProvider
+     */
+    static get defaultStrategyName() {
         return '__DefaultStrategy';
     }
 
+
+    /**
+     * Register Service Implementation Instance
+     *
+     * @param {*} serviceInterface
+     * @param {*} service
+     * @param {*} strategyName
+     * @memberof ServiceProvider
+     */
     registerServiceInstance(serviceInterface, service, strategyName) {
         let self = this;
-        
+
         if (service instanceof serviceInterface) {
             let serviceEntries = self._store.services.get(serviceInterface);
-            if (!serviceEntries){
+            if (!serviceEntries) {
                 self._store.services.set(serviceInterface, []);
                 serviceEntries = self._store.services.get(serviceInterface);
             }
-            
+
             strategyName = strategyName || ServiceProvider.defaultStrategyName;
-            if (!serviceEntries.map(_=>_.strategyName).includes(strategyName)){
-                serviceEntries.push({strategyName, service});
+            if (!serviceEntries.map(_ => _.strategyName).includes(strategyName)) {
+                serviceEntries.unshift({ strategyName, service });
             } else {
-                let entry = serviceEntries.find(_=>_.strategyName === strategyName);
+                let entry = serviceEntries.find(_ => _.strategyName === strategyName);
                 entry.service = service;
             }
         }
     }
 
     /**
-     * Runtime get service instance for a service interface
+     * Get service instance for a service interface
      *
      * @param {*} serviceInterface
      * @returns
      * @memberof ServiceProvider
      */
-    getServiceInstance(serviceInterface, strategyName){
-        strategyName = strategyName || ServiceProvider.defaultStrategyName;
+    getServiceInstance(serviceInterface, strategyName) {
         let serviceEntries = this._store.services.get(serviceInterface);
         if (serviceEntries) {
-            return serviceEntries.find(_=>_.strategyName === strategyName).service;
+            if (strategyName) {
+                return serviceEntries.find(_ => _.strategyName === strategyName).service;
+            } else if (serviceEntries.length > 0) {
+                return serviceEntries[0].service;
+            }
         }
         return null;
     }

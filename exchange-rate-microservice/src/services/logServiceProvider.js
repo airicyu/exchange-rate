@@ -10,25 +10,52 @@ const serviceProvider = require('./serviceProvider');
  * @class DelegateLogService
  * @extends {LogService}
  */
-class DelegateLogService extends LogService{
+class DelegateLogService extends LogService {
 
-    constructor(strategyName){
+    /**
+     *Creates an instance of DelegateLogService.
+     * @param {*} strategyName
+     * @memberof DelegateLogService
+     */
+    constructor(strategyName) {
         super();
         let self = this;
         self.delegateStrategyName = strategyName;
     }
 
-    log(...args){
+    /**
+     * log message
+     *
+     * @param {*} args
+     * @returns
+     * @memberof DelegateLogService
+     */
+    log(...args) {
         let service = serviceProvider.getServiceInstance(LogService, this.delegateStrategyName);
         return service.log(...args);
     }
 
-    debug(...args){
+    /**
+     * log debug message
+     *
+     * @param {*} args
+     * @returns
+     * @memberof DelegateLogService
+     */
+    debug(...args) {
         let service = serviceProvider.getServiceInstance(LogService, this.delegateStrategyName);
         return service.debug(...args);
     }
 
-    error(...args){
+
+    /**
+     * log error message
+     *
+     * @param {*} args
+     * @returns
+     * @memberof DelegateLogService
+     */
+    error(...args) {
         let service = serviceProvider.getServiceInstance(LogService, this.delegateStrategyName);
         return service.error(...args);
     }
@@ -48,8 +75,16 @@ class LogServiceProvider {
         this.delegateServiceInstanceMap = {};
     }
 
-    getService(strategyName){
-        if (this.delegateServiceInstanceMap[strategyName]){
+
+    /**
+     * Get service instance
+     *
+     * @param {*} strategyName
+     * @returns
+     * @memberof LogServiceProvider
+     */
+    getService(strategyName) {
+        if (this.delegateServiceInstanceMap[strategyName]) {
             return this.delegateServiceInstanceMap[strategyName];
         } else {
             this.delegateServiceInstanceMap[strategyName] = new DelegateLogService(strategyName);

@@ -6,106 +6,17 @@ const logService = require('./../services/logServiceProvider.js').getService();
 const keyValueStoreService = require('./../services/keyValueStoreServiceProvider.js').getService();
 const request = require('request');
 
-const exchngeRatesApiResponseBodyParser = (body) => {
-    if (body && typeof body === 'object' && body.hasOwnProperty('rates')) {
-        return { error: null, data: body.rates };
-    } else {
-        return { error: new Error('Unknown data'), data: null };
-    }
-}
-
 /**
- * Default implementation
+ * Default implementation of Exchange Rate Data Service.
+ * 
+ * Query exchange rate from https://openexchangerates.org API, with some cache/store mechanism.
  *
+ * TODO: Query Latest rate is cache for 5 minute(hardcoded). Should make it configuable.
+ * 
  * @class DefaultDataService
  * @extends {DataService}
  */
 class DefaultDataService extends DataService {
-
-    async fetchLatestCurrencyDataFromSource(baseCurrency) {
-        let config = configService.config;
-        let openExchangeRatesContext = {
-            baseUrl: config.openExchangeRates.baseUrl,
-            appId: config.openExchangeRates.appId
-        }
-
-        let dataEndpoint = `${openExchangeRatesContext.baseUrl}/api/latest.json?app_id=${openExchangeRatesContext.appId}&base=${baseCurrency}`;
-
-        let dataValue = null;
-        try {
-            dataValue = await new Promise((resolve, reject) => {
-                request({
-                    url: dataEndpoint,
-                    json: true
-                }, (error, response, body) => {
-                    if (error) {
-                        return reject(error);
-                    } else {
-                        let { error, data } = exchngeRatesApiResponseBodyParser(body);
-                        if (error) {
-                            return reject(error);
-                        } else {
-                            return resolve(data);
-                        }
-
-                    }
-                });
-            });
-        } catch (error) {
-            logService.log('Data Service Error: ', error);
-            return {
-                error: error,
-                data: null
-            }
-        }
-
-        return {
-            error: null,
-            data: dataValue
-        };
-    }
-
-    async fetchHistoricalCurrencyDataFromSource(baseCurrency, date) {
-        let config = configService.config;
-        let openExchangeRatesContext = {
-            baseUrl: config.openExchangeRates.baseUrl,
-            appId: config.openExchangeRates.appId
-        }
-
-        let dataEndpoint = `${openExchangeRatesContext.baseUrl}/api/historical/${date}.json?app_id=${openExchangeRatesContext.appId}&base=${baseCurrency}`;
-
-        let dataValue = null;
-        try {
-            dataValue = await new Promise((resolve, reject) => {
-                request({
-                    url: dataEndpoint,
-                    json: true
-                }, (error, response, body) => {
-                    if (error) {
-                        return reject(error);
-                    } else {
-                        let { error, data } = exchngeRatesApiResponseBodyParser(body);
-                        if (error) {
-                            return reject(error);
-                        } else {
-                            return resolve(data);
-                        }
-                    }
-                });
-            });
-        } catch (error) {
-            logService.log('Data Service Error: ', error);
-            return {
-                error: error,
-                data: null
-            }
-        }
-
-        return {
-            error: null,
-            data: dataValue
-        };
-    }
 
     /**
      * query currency latest data
@@ -123,6 +34,7 @@ class DefaultDataService extends DataService {
         let dataKey = `currencyRates:${baseCurrency}:latest`;
         let storeData = await keyValueStoreService.get(dataKey);
         let currencyDataLastSyncTime = await keyValueStoreService.get('_latestCurrencyDataLastUpdateTime');
+
         if (!storeData || !currencyDataLastSyncTime || Date.now() - currencyDataLastSyncTime > 5 * 60 * 1000) { //5 minute refresh
             //refresh data
             let now = Date.now();
@@ -183,7 +95,123 @@ class DefaultDataService extends DataService {
         }
 
         return { error, data };
-        
+
+    }
+
+    /**
+     * Fetch currency exchange rate latest data from API
+     *
+     * @param {*} baseCurrency
+     * @returns
+     * @memberof DefaultDataService
+     */
+    async fetchLatestCurrencyDataFromSource(baseCurrency) {
+        let config = configService.config;
+        let openExchangeRatesContext = {
+            baseUrl: config.openExchangeRates.baseUrl,
+            appId: config.openExchangeRates.appId
+        }
+
+        let dataEndpoint = `${openExchangeRatesContext.baseUrl}/api/latest.json?app_id=${openExchangeRatesContext.appId}&base=${baseCurrency}`;
+
+        let dataValue = null;
+        try {
+            dataValue = await new Promise((resolve, reject) => {
+                request({
+                    url: dataEndpoint,
+                    json: true
+                }, (error, response, body) => {
+                    if (error) {
+                        return reject(error);
+                    } else {
+                        let { error, data } = exchngeRatesApiResponseBodyParser(body);
+                        if (error) {
+                            logService.log('Request Error when query historical data from remote service', error);
+                            return reject(error);
+                        } else {
+                            return resolve(data);
+                        }
+
+                    }
+                });
+            });
+        } catch (error) {
+            return {
+                error: error,
+                data: null
+            }
+        }
+
+        return {
+            error: null,
+            data: dataValue
+        };
+    }
+
+    /**
+     * Fetch currency exchange rate historical data from API
+     *
+     * @param {*} baseCurrency
+     * @param {*} date
+     * @returns
+     * @memberof DefaultDataService
+     */
+    async fetchHistoricalCurrencyDataFromSource(baseCurrency, date) {
+        let config = configService.config;
+        let openExchangeRatesContext = {
+            baseUrl: config.openExchangeRates.baseUrl,
+            appId: config.openExchangeRates.appId
+        }
+
+        let dataEndpoint = `${openExchangeRatesContext.baseUrl}/api/historical/${date}.json?app_id=${openExchangeRatesContext.appId}&base=${baseCurrency}`;
+
+        let dataValue = null;
+        try {
+            dataValue = await new Promise((resolve, reject) => {
+                request({
+                    url: dataEndpoint,
+                    json: true
+                }, (error, response, body) => {
+                    if (error) {
+                        logService.log('Request Error when query historical data from remote service', error);
+                        return reject(error);
+                    } else {
+                        let { error, data } = exchngeRatesApiResponseBodyParser(body);
+                        if (error) {
+                            logService.log('Service Error when query historical data from remote service', error);
+                            return reject(error);
+                        } else {
+                            return resolve(data);
+                        }
+                    }
+                });
+            });
+        } catch (error) {
+            return {
+                error: error,
+                data: null
+            }
+        }
+
+        return {
+            error: null,
+            data: dataValue
+        };
+    }
+
+}
+
+/**
+ * Parse exchngeRates API's reponse body
+ *
+ * @param {*} body
+ * @returns
+ */
+const exchngeRatesApiResponseBodyParser = (body) => {
+    if (body && typeof body === 'object' && body.hasOwnProperty('rates')) {
+        return { error: null, data: body.rates };
+    } else {
+        return { error: new Error('Unknown data'), data: null };
     }
 }
 

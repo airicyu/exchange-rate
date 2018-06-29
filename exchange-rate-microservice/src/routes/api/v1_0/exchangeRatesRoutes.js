@@ -9,16 +9,16 @@ const logService = require('./../../../services/logServiceProvider').getService(
 /**
  * Route query currency latest rate
  */
-router.get('/:baseCurrency/latest', (req, res, next)=>{
-    logService.log(`exchangeRatesRoutes currency latest value '/:baseCurrency/latest', ${req.originalUrl}`);
+router.get('/:baseCurrency/latest', (req, res, next) => {
+    logService.log(`exchangeRatesRoutes currency latest value, ${req.originalUrl}`);
     next();
 }, exchangeRatesController.getCurrencyLatestData);
 
 /**
  * Route query currency historical rate
  */
-router.get('/:baseCurrency/historical/:date', (req, res, next)=>{
-    logService.log(`exchangeRatesRoutes currency historical value '/:baseCurrency/historical/:date', ${req.originalUrl}`);
+router.get('/:baseCurrency/historical/:date', (req, res, next) => {
+    logService.log(`exchangeRatesRoutes currency historical value, ${req.originalUrl}`);
     next();
 }, exchangeRatesController.getCurrencyHistoricalData);
 

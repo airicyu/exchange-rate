@@ -6,14 +6,30 @@
  * @class LogService
  */
 class LogService {
-    log(...args){
-    }
 
-    debug(...args){
-    }
+    /**
+     * Log message
+     *
+     * @param {*} args
+     * @memberof LogService
+     */
+    log(...args) {}
 
-    error(...args){
-    }
+    /**
+     * Log debug message
+     *
+     * @param {*} args
+     * @memberof LogService
+     */
+    debug(...args) {}
+
+    /**
+     * Log error message
+     *
+     * @param {*} args
+     * @memberof LogService
+     */
+    error(...args) {}
 }
 
 module.exports = LogService;

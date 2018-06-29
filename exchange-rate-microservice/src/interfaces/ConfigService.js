@@ -7,11 +7,19 @@
  */
 class ConfigService {
 
-    get config(){
-    }
+    /**
+     * Get config
+     *
+     * @memberof ConfigService
+     */
+    get config() {}
 
-    set config(newConfig){
-    }
+    /**
+     * Set config
+     *
+     * @memberof ConfigService
+     */
+    set config(newConfig) {}
 }
 
 module.exports = ConfigService;

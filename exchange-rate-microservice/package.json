@@ -1,10 +1,11 @@
 {
   "name": "exchange-rate-microservice",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
+    "start": "node app.js",
     "test": "nyc mocha",
     "coverage": "nyc report --reporter=text-lcov > coverage/icov.info && codecov --file=./coverage/lcov.info"
   },
@@ -15,6 +16,7 @@
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "http-shutdown": "^1.2.0",
+    "mysql": "^2.15.0",
     "request": "^2.87.0",
     "yamljs": "^0.3.0"
   },
@@ -32,8 +34,7 @@
     "include": [
       "src/**/*.js"
     ],
-    "exclude": [
-    ],
+    "exclude": [],
     "reporter": [
       "lcov",
       "text-summary"

@@ -9,12 +9,14 @@ const logService = require('./../../../services/logServiceProvider').getService(
 /**
  * Route exchange rate resources
  */
-router.use('/exchangeRates', (req, res, next)=>{
-    logService.log(`API v1.0 exchangeRatesRoutes '/exchangeRates', ${req.originalUrl}`);
+router.use('/exchangeRates', (req, res, next) => {
     next();
 }, exchangeRatesRoutes);
 
-router.get('/healthCheck', (req, res)=>{
+/**
+ * For health check purpose
+ */
+router.get('/healthCheck', (req, res) => {
     res.json({
         error: null,
         data: true

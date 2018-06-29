@@ -64,3 +64,4 @@ typings/
 
 config.yaml
 serviceAccountToken.json
+exchange-rate-microservice/config.yaml

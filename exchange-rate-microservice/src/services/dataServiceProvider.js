@@ -11,17 +11,37 @@ const serviceProvider = require('./serviceProvider');
  * @extends {DataService}
  */
 class DelegateDataService extends DataService {
-    
-    constructor(strategyName){
+
+    /**
+     *Creates an instance of DelegateDataService.
+     * @param {*} strategyName
+     * @memberof DelegateDataService
+     */
+    constructor(strategyName) {
         super();
         let self = this;
         self.delegateStrategyName = strategyName;
     }
 
+    /**
+     * Query Currency Exchange Rate Latest Data
+     *
+     * @param {*} currency
+     * @returns
+     * @memberof DelegateDataService
+     */
     async queryCurrencyLatestData(currency) {
         return serviceProvider.getServiceInstance(DataService, this.delegateStrategyName).queryCurrencyLatestData(currency);
     }
 
+    /**
+     * Query Currency Exchange Rate Historical Data
+     *
+     * @param {*} currency
+     * @param {*} date
+     * @returns
+     * @memberof DelegateDataService
+     */
     async queryCurrencyHistoricalData(currency, date) {
         return serviceProvider.getServiceInstance(DataService, this.delegateStrategyName).queryCurrencyHistoricalData(currency, date);
     }
@@ -41,8 +61,15 @@ class DataServiceProvider {
         this.delegateServiceInstanceMap = {};
     }
 
-    getService(strategyName){
-        if (this.delegateServiceInstanceMap[strategyName]){
+    /**
+     * Get service instance
+     *
+     * @param {*} strategyName
+     * @returns
+     * @memberof DataServiceProvider
+     */
+    getService(strategyName) {
+        if (this.delegateServiceInstanceMap[strategyName]) {
             return this.delegateServiceInstanceMap[strategyName];
         } else {
             this.delegateServiceInstanceMap[strategyName] = new DelegateDataService(strategyName);

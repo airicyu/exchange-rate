@@ -3,22 +3,38 @@
 const ConfigService = require('./../interfaces/ConfigService');
 
 /**
- * Default implementation
+ * Default implementation with simple object store
  *
  * @class DefaultConfigService
  * @extends {ConfigService}
  */
 class DefaultConfigService extends ConfigService {
-    constructor(config){
+
+    /**
+     *Creates an instance of DefaultConfigService.
+     * @param {*} config
+     * @memberof DefaultConfigService
+     */
+    constructor(config) {
         super(config);
         this._config = config || {};
     }
 
-    get config(){
+    /**
+     * Get Config
+     *
+     * @memberof DefaultConfigService
+     */
+    get config() {
         return this._config;
     }
 
-    set config(newConfig){
+    /**
+     * Set Config
+     *
+     * @memberof DefaultConfigService
+     */
+    set config(newConfig) {
         this._config = newConfig;
     }
 }

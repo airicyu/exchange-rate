@@ -9,8 +9,7 @@ const logService = require('./../../services/logServiceProvider').getService();
 /**
  * Route API v1.0
  */
-router.use('/api/v1.0', (req, res, next)=>{
-    logService.log(`API v1.0 router '/api/v1.0', ${req.originalUrl}`);
+router.use('/api/v1.0', (req, res, next) => {
     next();
 }, v1);
 

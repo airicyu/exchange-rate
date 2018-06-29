@@ -10,9 +10,9 @@ const serviceProvider = require('./serviceProvider');
  * @class DelegateConfigService
  * @extends {ConfigService}
  */
-class DelegateConfigService extends ConfigService{
-    
-    constructor(strategyName){
+class DelegateConfigService extends ConfigService {
+
+    constructor(strategyName) {
         super();
         let self = this;
         self.delegateStrategyName = strategyName;
@@ -23,7 +23,7 @@ class DelegateConfigService extends ConfigService{
      *
      * @memberof DelegateConfigService
      */
-    get config(){
+    get config() {
         return serviceProvider.getServiceInstance(ConfigService, this.delegateStrategyName).config;
     }
 
@@ -32,7 +32,7 @@ class DelegateConfigService extends ConfigService{
      *
      * @memberof DelegateConfigService
      */
-    set config(newConfig){
+    set config(newConfig) {
         serviceProvider.getServiceInstance(ConfigService, this.delegateStrategyName).config = newConfig;
     }
 }
@@ -47,13 +47,24 @@ class DelegateConfigService extends ConfigService{
  */
 class ConfigServiceProvider {
 
+    /**
+     *Creates an instance of ConfigServiceProvider.
+     * @memberof ConfigServiceProvider
+     */
     constructor() {
         serviceProvider.registerServiceInstance(ConfigService, new DefaultConfigService());
         this.delegateServiceInstanceMap = {};
     }
 
-    getService(strategyName){
-        if (this.delegateServiceInstanceMap[strategyName]){
+    /**
+     * Get service instance
+     *
+     * @param {*} strategyName
+     * @returns
+     * @memberof ConfigServiceProvider
+     */
+    getService(strategyName) {
+        if (this.delegateServiceInstanceMap[strategyName]) {
             return this.delegateServiceInstanceMap[strategyName];
         } else {
             this.delegateServiceInstanceMap[strategyName] = new DelegateConfigService(strategyName);
