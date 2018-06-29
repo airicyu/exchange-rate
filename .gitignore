@@ -61,3 +61,6 @@ typings/
 .next
 
 .vscode
+
+config.yaml
+serviceAccountToken.json
