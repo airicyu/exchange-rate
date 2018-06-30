@@ -1,0 +1,74 @@
+openapi: "3.0.0"
+info:
+  version: 1.0.0
+  title: Exchange Rate Service
+  license:
+    name: MIT
+servers:
+  - url: http://exchange-rate-microservice.airic-yu.com/api/v1.0
+paths:
+  /exchangeRates/{baseCurrency}/latest:
+    get:
+      summary: "Get Exchange Rate Latest Data"
+      operationId: getExchangeRateLatest
+      tags:
+      - exchange rate
+      parameters:
+      - name: "baseCurrency"
+        in: "path"
+        description: "The Base Currency (e.g: usd)"
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: "successful result"
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+  /exchangeRates/{baseCurrency}/historical/{date}:
+    get:
+      summary: "Get Exchange Rate Historial Data"
+      operationId: getExchangeRateLatest
+      tags:
+      - exchange rate
+      parameters:
+      - name: "baseCurrency"
+        in: "path"
+        description: "The Base Currency (e.g: usd)"
+        required: true
+        schema:
+          type: string
+      - name: "date"
+        in: "path"
+        description: "The date to search in yyyy-mm-dd format"
+        required: true
+        schema:
+          type: string
+      responses:
+        '200':
+          description: "successful result"
+          content:
+            application/json:    
+              schema:
+                $ref: "#/components/schemas/ApiResponse"
+components:
+  schemas:
+    ApiResponse:
+      required:
+        - error
+        - data
+      properties:
+        error:
+          type: string
+          nullable: true
+        data:
+          type: object
+          nullable: true
+      example:
+        error: null
+        data:
+        - AED: 3.673014
+        - AFN: 73.307069
+        - HKD: 7.84805

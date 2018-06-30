@@ -1,13 +1,20 @@
-GET http://localhost:8000/api/v1.0/exchangeRates/usd/latest
 ###
-GET http://localhost:8000/api/v1.0/exchangeRates/usd/historical/2018-06-26
-###
-GET http://localhost:8000/api/v1.0/exchangeRates/usd/historical/2018-06-25
+GET http://localhost:8080/api/v1.0/exchangeRates/usd/latest
 
 ###
-GET http://localhost:9000/api/v1.0/exchangeRates/usd/latest
+GET http://localhost:8080/api/v1.0/exchangeRates/usd/historical/2018-06-26
+
 ###
-GET http://localhost:9000/api/v1.0/exchangeRates/usd/historical/2018-06-26
+GET http://localhost:8080/api/v1.0/exchangeRates/usd/historical/2018-06-25
+
 ###
-GET http://localhost:9000/api/v1.0/exchangeRates/usd/historical/2018-06-25
+GET http://exchange-rate-microservice.airic-yu.com/api/v1.0/exchangeRates/usd/latest
+
 ###
+GET http://exchange-rate-microservice.airic-yu.com/api/v1.0/exchangeRates/usd/historical/2018-06-26
+
+###
+GET http://exchange-rate-microservice.airic-yu.com/api/v1.0/exchangeRates/usd/historical/2018-06-25
+
+
+
