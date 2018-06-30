@@ -305,3 +305,23 @@ Remarks:
 
 Originally I want to deploy to Google App Engine, but seems there is some connection setting issue with Google App Engine's MySQL server.
 Hence as fallback, I hosted the apps in my rented server instead.
+
+---------------------
+
+## Reference Effort spent
+
+Daily:
+
+- Day 1: one night to design (0.5 MD)
+- Day 2: one long night for prorotype (1MD)
+- Day 3: one long night with refine design (0.5MD) and dev (0.5MD)
+- Day 4: one long night for dev/test (1 MD)
+- Day 5: doc at night (0.5 MD)
+
+Overall:
+
+- Design: 1 man day
+- Dev/Test: 2.5 man day
+- Documentation: 0.5 man day
+
+Total: around 4 man day.
