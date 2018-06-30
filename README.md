@@ -288,13 +288,13 @@ Exchange rate data source: openexchangerates.org
 
 ---------------------
 
-Boilerplate code reference:
+## Boilerplate code reference:
 
 https://github.com/theturtle32/WebSocket-Node
 
 ---------------------
 
-Server Hosting
+## Server Hosting
 
 http://exchange-rate-front.airic-yu.com/
 
