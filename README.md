@@ -53,6 +53,8 @@ Potentially, we can build an exposure API layer on top of our system API layer m
 
 ### Ultimate Architecture
 
+![Ultimate Architecture](https://raw.githubusercontent.com/airicyu/exchange-rate/master/images/ultimate_architecture.png)
+
 - Presentation Layer
     - The client side webpage/browser.
 - Frontend Server Layer
@@ -64,12 +66,22 @@ Potentially, we can build an exposure API layer on top of our system API layer m
 
 ### Simplified Architecture for prototype
 
+![Prototype Architecture](https://raw.githubusercontent.com/airicyu/exchange-rate/master/images/prototype_architecture.png)
+
 We would not implement all things in the Ultimate picture in this prototype project due to resource constraint:
 - No network routing, no explicit take care of firewalls, etc
 - Frontend Server only start 1 instance
 - Back Server only start 1 instance
 - Microservice only start 1 instance
 - No API gateway
+
+### Logic Flow for query historical data
+
+![Logic Flow for query historical data](https://raw.githubusercontent.com/airicyu/exchange-rate/master/images/logic_flow_query_historical_data.png)
+
+### Logic Flow for query latest data
+
+![Logic Flow for query latest data](https://raw.githubusercontent.com/airicyu/exchange-rate/master/images/logic_flow_query_latest_data.png)
 
 ---------------------
 
@@ -80,6 +92,8 @@ We would not implement all things in the Ultimate picture in this prototype proj
 The module is wrapping a mini library.
 The mini library containing methods to manage the microservices to control start/stop.
 
+![Exchange Rate Microservice Module Design](https://raw.githubusercontent.com/airicyu/exchange-rate/master/images/microservice_module_design.png)
+
 #### Service Implementation & Dependency problem
 
 There are many internal services needed in the microservice code. For example, logging, data store.
@@ -88,6 +102,8 @@ Of cause we may provide concrete implementation for each services, but we may di
 #### Use Service Provider to abstract and decouple service implementation
 
 So, we design a serice provider pattern to resolve the problem. All code which need to use a certain service s would only depends on the service interface but not service implmentation. The code would ask for a service interface and get service instance from service provider. Service provider would manage the service implmentation mapping.
+
+![Service Provider](https://raw.githubusercontent.com/airicyu/exchange-rate/master/images/service_provider.png)
 
 #### Future extensibility and maintence
 
@@ -281,6 +297,11 @@ https://github.com/theturtle32/WebSocket-Node
 Server Hosting
 
 http://exchange-rate-front.airic-yu.com/
+
+Web page screenshot:
+
+![Screenshot](https://raw.githubusercontent.com/airicyu/exchange-rate/master/images/exchange_rate_webpage_demo_screenshot.png)
+
 
 Remarks:
 
