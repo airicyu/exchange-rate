@@ -30,9 +30,9 @@ For internal needs, we think that service reusability is our concerned value. So
 
 ## Solution
 
-Since I am more a backend guy, I want to solve this challenge which focus on backend stack. But from the problem solving prespective, a full stack solution is more applicable for this problem.
+Since I am more a backend guy, I want to solve this challenge which focus on backend stack. But from the problem solving prespective, I think a full stack solution is more applicable for this problem.
 
-So, I would provide a full stack solution, but I would state that **I would choose to more focus to the backend side**.
+So, I would provide a full stack solution. And please consider my solution as full-stack solution.
 
 ### What we would include
 
@@ -116,8 +116,6 @@ Today we may use MySQL for key-value store, tomorrow we may switch to use Redis.
 ---------------------
 
 ### Presentation UI, Front Server and Back Server Design
-
-Since I am more focus to backend stack so I would not talk much here.
 
 #### Presentation UI
 
