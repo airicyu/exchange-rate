@@ -147,7 +147,7 @@ The webpage presentation UI have two parts.
 ### Service Availability
 
 Since that our microservice is relying on free external exchange rate API which has limited API quotas.
-If we do not have measurements to reduce API call, we would easily used up all quota and then the service would be down.
+If we do not have tricks to reduce API call, we would easily used up all quota and then the service would be down.
 
 To reduce API call, we have the below design
 
@@ -226,7 +226,7 @@ Method: GET
 Sample Request:
 
 ```
-GET http://exchange-rate-microservice.airic-yu.com/api/v1.0/exchangeRates/usd/latest
+GET http://exchange-rate-microservice.airic-yu.com/api/v1.0/exchangeRates/usd/historical/2018-06-26
 ```
 
 Sample Response: 
